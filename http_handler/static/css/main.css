@@ -237,3 +237,12 @@ table.dataTable tbody tr:hover{
 	}
 
 
+#tableInput {
+	display: block;
+	height: 80%;
+	margin-left: 0px;
+	margin-top: 10px;
+	width: 90%;
+}
+
+

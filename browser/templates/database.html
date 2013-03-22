@@ -8,8 +8,10 @@
 <div id="content">
 	<h2><a href=/{{username}}>{{username}}</a> - {{db_name}}</h2>
 	<hr />
-	<h3 class="gray">Public Tables</h3>
+	<button type="button" id="btn-create-db" onclick="create_table();" style="margin-left:0px;">Create a New Table</button>
 	<br />
+	<br />
+	<h3><span class="gray">Displaying Tables in:</span> <span class="strong">{{db_name}}</span></h3>
 	<br />
 	<table id="databases">
 		<thead>

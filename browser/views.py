@@ -67,6 +67,9 @@ def register(request):
 	else:
 		return register_form(request)
 
+
+
+
 def logout(request):
 	request.session.flush()
 	return HttpResponseRedirect('/login')
@@ -86,9 +89,14 @@ def user(request, username=None):
 
 
 
+
+
+
 def new_database(request, username, db_name):
 	engine.main.create_database(username, db_name)
 	return HttpResponseRedirect("/"+username)
+
+
 
 def database(request, username, db_name):
 	try:
