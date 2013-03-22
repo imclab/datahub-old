@@ -8,20 +8,14 @@ $(document).ready(function(){
  
 	/* Dynamic Table Definitions */	
 	
-	members_table = $('#members-table').dataTable({
+	databases = $('#databases').dataTable({
 		"sDom": '<"top"f<"clear">>rt<"bottom"ilp<"clear">>',
 		"bPaginate": false,
-		"bInfo": false,
-		"bAutoWidth": false,
-		"bFilter": false,
+		"bFilter": true,
 		"sWidth": "100%",
 		"aoColumns": [                 
-			{"bSortable": false, "sWidth": "50%"},
-			{"bSortable": false, "sWidth": "10%"},
-			{"bSortable": false, "sWidth": "10%"},
-			{"bSortable": false, "sWidth": "10%"},
-			{"bSortable": false, "sWidth": "10%"},
-			{"bSortable": false, "sWidth": "10%"}
+			{"sWidth": "50%"},
+			{"sWidth": "50%"},
 		]  
 	});
 	

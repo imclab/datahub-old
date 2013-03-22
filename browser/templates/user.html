@@ -5,9 +5,34 @@
 {% block content %}
 
 
-<div id="main-area-wrapper">
-<div id="main-area">
-</div>
+<div id="content">
+	<h2>{{user}}</h2>
+	<hr />
+	<h3 class="gray">Public Databases</h3>
+	<br />
+	<br />
+	<table id="databases">
+		<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td><span class="strong">demo1</span></td><td><span class="gray">demo1 databse</span></td>
+		</tr>
+		<tr>
+			<td><span class="strong">demo2</span></td><td><span class="gray">demo2 databse</span></td>
+		</tr>
+		<tr>
+			<td><span class="strong">demo3</span></td><td><span class="gray">demo3 databse</span></td>
+		</tr>
+		<tr>
+			<td><span class="strong">demo4</span></td><td><span class="gray">demo4 databse</span></td>
+		</tr>
+	</tbody>
+	</table>
 </div>
 {% endblock %}
 
