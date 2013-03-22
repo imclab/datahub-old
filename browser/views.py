@@ -57,7 +57,8 @@ def register(request):
 			user = User(username=username, email=email, password=password)
 			user.save()
 			engine.main.create_database(user.username, 'default_db')
-			engine.main.create_table(user.username, 'default_db', 'default_table')
+			res = engine.main.create_table(user.username, 'default_db', 'default_table')
+			engine.main.write_table(res['table'].table_name)
 			request.session.flush()
 			request.session[SESSION_KEY] = user.username
 			return HttpResponseRedirect("/" + user.username)

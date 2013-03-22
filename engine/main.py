@@ -1,8 +1,11 @@
 import sys, logging, time, base64, datetime
 from schema.models import *
+import schema
 from msg_codes import *
 from django.utils.timezone import utc
 from django.utils.html import escape
+from django.core.management import sql, color
+from django.db import connection
 
 '''
 Datahub Main Controller
@@ -61,8 +64,15 @@ def create_table(username, db_name, table_name):
 		db = Database.objects.get(db_name=username + '_' + db_name)
 		table = Table(database = db, table_name = db.db_name + '_' + table_name)
 		table.save()
+		res['table'] = table
 		res['status'] = True				
 	except:
 		res['code'] = msg_code['UNKNOWN_ERROR']
 	logging.debug(res)
 	return res
+
+
+def write_table(table_name):
+	cursor = connection.cursor()
+	cursor.execute('CREATE TABLE %s (id int primary key)' %(table_name))
+	
