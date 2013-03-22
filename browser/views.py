@@ -5,6 +5,7 @@ import engine.main
 from engine.msg_codes import *
 from django.core.context_processors import csrf
 import json, logging
+from schema.models import *
 
 '''
 @author: Anant Bhardwaj
@@ -24,14 +25,22 @@ def login_form(request):
 	c.update(csrf(request))
 	return render_to_response('login.html', c)
 
+
+def register_form(request):
+	c = {}
+	c.update(csrf(request))
+	return render_to_response('register.html', c)
+
 def login(request):
 	if request.method == "POST":
 		try:
-			user = request.POST["user"]
-			if(user != ""):
+			username = request.POST["username"]
+			password = request.POST["password"]
+			if(username != "" and password!= ""):
+				user = User.objects.get(username=username, password=password)
 				request.session.flush()
-				request.session[SESSION_KEY] = user
-				return HttpResponseRedirect(user)
+				request.session[SESSION_KEY] = user.username
+				return HttpResponseRedirect(user.username)
 			else:
 				return login_form(request)
 		except:
@@ -39,7 +48,21 @@ def login(request):
 	else:
 		return login_form(request)
 		
-
+def register(request):
+	if request.method == "POST":
+		username = request.POST["username"]
+		email = request.POST["email"]
+		password = request.POST["password"]
+		if(username != "" and password != "" and email!=""):
+			user = User(username=username, email=email, password=password)
+			user.save()
+			request.session.flush()
+			request.session[SESSION_KEY] = user.username
+			return HttpResponseRedirect(user.username)
+		else:
+			return register_form(request)
+	else:
+		return register_form(request)
 
 def logout(request):
 	request.session.flush()

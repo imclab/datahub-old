@@ -6,6 +6,7 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
      url(r'^logout', 'browser.views.logout'),
      url(r'^login', 'browser.views.login'),
+     url(r'^register', 'browser.views.register'),
      url(r'^$', 'browser.views.user'),
 	 url(r'^(\w+)$', 'browser.views.user'),
 	 url(r'^(\w+)/(\w+)$', 'browser.views.database'),
