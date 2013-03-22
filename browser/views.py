@@ -47,7 +47,7 @@ def logout(request):
 
 
 
-def index(request, username=None):
+def user(request, username=None):
 	try:
 		if(username):
 			return render_to_response("user.html", {'user': username})
@@ -63,23 +63,18 @@ def index(request, username=None):
 
 	
 
-def list_tables(request, username, database):
+def table(request, username, database, table):
 	try:
-		res = engine.main.list_tables(username, database)
-		res.update({'user': username})
-		res.update({'database': database})
-		return HttpResponse(json.dumps(res), mimetype="application/json")
+		return render_to_response("table.html", {'user': username, 'database':database, 'table':table})
 	except Exception, e:
 		logging.debug(e)
 		return HttpResponse(request_error, mimetype="application/json")
 
 
 
-def list_databases(request, username):
+def database(request, username, database):
 	try:
-		res = engine.main.list_databases(username)
-		res.update({'user': username})
-		return HttpResponse(json.dumps(res), mimetype="application/json")
+		return render_to_response("database.html", {'user': username, 'database':database})
 	except Exception, e:
 		logging.debug(e)
 		return HttpResponse(request_error, mimetype="application/json")
