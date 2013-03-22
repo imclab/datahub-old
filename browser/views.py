@@ -47,9 +47,13 @@ def logout(request):
 
 
 
-def index(request, username):
+def index(request, username=None):
 	try:
-		return render_to_response("user.html", {'user': username})
+		if(username):
+			return render_to_response("user.html", {'user': username})
+		else:
+			user = request.session[SESSION_KEY]
+			return HttpResponseRedirect(user)
 	except KeyError:
 		return HttpResponseRedirect('login')
 
