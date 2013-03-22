@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block headlink-right %}
+{% endblock %}
+{% block content %}
+<form method="POST" action="login">
+	{% csrf_token %}
+	<h3>DataHub Login</h3>
+	<hr />
+	<label for="login_email">Username</label><br />
+	<input type="text" name="user" id="login_user" value="demo" /><br /><br />
+	<label for="login_password">Password</label><br />
+	<input type="password" name="password" id="login_password" value="demo" /><br /><br />
+	<input type="submit" value="Log In" />
+</form>
+{% endblock %}
