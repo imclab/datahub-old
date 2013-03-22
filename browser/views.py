@@ -62,8 +62,8 @@ def index(request, username):
 def list_tables(request, username, database):
 	try:
 		res = engine.main.list_tables(username, database)
-		res.update({'user': username)
-		res.update({'database': database)
+		res.update({'user': username})
+		res.update({'database': database})
 		return HttpResponse(json.dumps(res), mimetype="application/json")
 	except Exception, e:
 		logging.debug(e)
@@ -74,12 +74,8 @@ def list_tables(request, username, database):
 def list_databases(request, username):
 	try:
 		res = engine.main.list_databases(username)
-		res.update({'user': username)
+		res.update({'user': username})
 		return HttpResponse(json.dumps(res), mimetype="application/json")
 	except Exception, e:
 		logging.debug(e)
 		return HttpResponse(request_error, mimetype="application/json")
-
-
-
-d

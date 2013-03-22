@@ -74,6 +74,7 @@ body {
 
 
 #header {
+	margin:0 auto;
 	position: relative;
 	height: 39px;
 	font-size:11pt;
@@ -82,6 +83,12 @@ body {
 	color: white;
 	border-bottom: 1px solid #447EAC;
 	width: 100%;
+}
+
+#wrap{
+	position: relative;
+	margin:0 auto;
+	width: 1024px;
 }
 
 #headlink-right{
@@ -106,13 +113,14 @@ body {
 
 
 #page{
+	margin:0 auto;
 	position: absolute;
 	top: 40px;
 	right: 0px;
 	bottom: 0px;
 	left: 0px;
-	width: 100%;
-	background-color: #ccc;
+	width: 1024px;
+	background-color: #fff;
 }
 
 
