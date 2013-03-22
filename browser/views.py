@@ -56,8 +56,8 @@ def register(request):
 		if(username != "" and password != "" and email!=""):
 			user = User(username=username, email=email, password=password)
 			user.save()
-			database = engine.main.create_database(user.username, 'default_db')
-			engine.main.create_table(user.username, database.db_name, 'default_table')
+			engine.main.create_database(user.username, 'default_db')
+			engine.main.create_table(user.username, 'default_db', 'default_table')
 			request.session.flush()
 			request.session[SESSION_KEY] = user.username
 			return HttpResponseRedirect(user.username)
@@ -68,38 +68,41 @@ def register(request):
 
 def logout(request):
 	request.session.flush()
-	return HttpResponseRedirect('login')
+	return HttpResponseRedirect('/login')
 
 
 
 def user(request, username=None):
 	try:
 		if(username):
-			return render_to_response("user.html", {'user': username})
+			res = engine.main.list_databases(username)
+			return render_to_response("user.html", {'username': username, 'db_names':res['db_names']})
 		else:
 			user = request.session[SESSION_KEY]
 			return HttpResponseRedirect(user)
 	except KeyError:
-		return HttpResponseRedirect('login')
+		return HttpResponseRedirect('/login')
 
 
 
+
+def database(request, username, db_name):
+	try:
+		res = engine.main.list_tables(username, db_name)
+		return render_to_response("database.html", {'username': username, 'db_name':db_name, 'table_names':res['table_names']})
+	except Exception, e:
+		logging.debug(e)
+		return HttpResponse(request_error, mimetype="application/json")
 
 
 	
 
-def table(request, username, database, table):
+def table(request, username, db_name, table_name):
 	try:
-		return render_to_response("table.html", {'user': username, 'database':database, 'table':table})
+		return render_to_response("table.html", {'username': username, 'db_name':db_name, 'table_name':table_name})
 	except Exception, e:
 		logging.debug(e)
 		return HttpResponse(request_error, mimetype="application/json")
 
 
 
-def database(request, username, database):
-	try:
-		return render_to_response("database.html", {'user': username, 'database':database})
-	except Exception, e:
-		logging.debug(e)
-		return HttpResponse(request_error, mimetype="application/json")

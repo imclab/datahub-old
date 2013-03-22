@@ -13,13 +13,29 @@ Datahub Main Controller
 
 def list_databases(username):
 	res = {'status':False}
+	try:
+		user = User.objects.get(username=username)
+		databases = Database.objects.filter(owner = user)
+		db_names =[database.db_name for database in databases]
+		res['status'] = True
+		res['db_names'] = db_names			
+	except:
+		res['code'] = msg_code['UNKNOWN_ERROR']
 	logging.debug(res)
 	return res
 
 
 
-def list_tables(username, database):
+def list_tables(username, db_name):
 	res = {'status':False}
+	try:
+		db = Database.objects.get(db_name=db_name)
+		tables = Table.objects.filter(database = db)
+		table_names =[table.table_name for table in tables]
+		res['status'] = True
+		res['table_names'] = table_names			
+	except:
+		res['code'] = msg_code['UNKNOWN_ERROR']
 	logging.debug(res)
 	return res
 	
@@ -29,11 +45,11 @@ def create_database(username, db_name):
 	res = {'status':False}
 	try:
 		user = User.objects.get(username=username)
-		db =Database(user, username + '_' + db_name)
+		db = Database(owner = user, db_name = user.username + '_' + db_name)
 		db.save()
-		res=['status'] = True				
+		res['status'] = True				
 	except:
-		res['code'] = msg_code['UNKNOWN ERROR']
+		res['code'] = msg_code['UNKNOWN_ERROR']
 	logging.debug(res)
 	return res
 
@@ -42,12 +58,11 @@ def create_database(username, db_name):
 def create_table(username, db_name, table_name):
 	res = {'status':False}
 	try:
-		user = User.objects.get(username=username)
-		db = Database.objects.get(db_name=user.username + '_' + db_name)
-		table = Table(user, db, user.username + '_' + db.db_name + '_' + table_name)
+		db = Database.objects.get(db_name=username + '_' + db_name)
+		table = Table(database = db, table_name = db.db_name + '_' + table_name)
 		table.save()
-		res=['status'] = True				
+		res['status'] = True				
 	except:
-		res['code'] = msg_code['UNKNOWN ERROR']
+		res['code'] = msg_code['UNKNOWN_ERROR']
 	logging.debug(res)
 	return res

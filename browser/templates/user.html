@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block headlink-right %}
- <a href="#" data-dropdown="#dropdown-nav">{{ user }} ▾ </a>
+ <a href="#" data-dropdown="#dropdown-nav">{{ username }} ▾ </a>
 {% endblock %}
 {% block content %}
 
 
 <div id="content">
-	<h2>{{user}}</h2>
+	<h2>{{username}}</h2>
 	<hr />
 	<h3 class="gray">Public Databases</h3>
 	<br />
@@ -19,10 +19,12 @@
 		</tr>
 		</thead>
 		<tbody>
-		<tr>
-			<td class="strong">default_db</td><td class="gray">Default Databse</td>
-		</tr>
-	</tbody>
+			{% for db_name in db_names %}
+				<tr>
+				<td class="strong">{{db_name}}</td><td class="gray">Databse</td>
+				</tr>
+			{% endfor %}		
+		</tbody>
 	</table>
 </div>
 {% endblock %}
