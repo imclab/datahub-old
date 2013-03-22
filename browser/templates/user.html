@@ -3,12 +3,19 @@
  <a href="#" data-dropdown="#dropdown-nav">{{ username }} ▾ </a>
 {% endblock %}
 {% block content %}
+<script type="text/javascript">
 
+function create_db(){
+	window.location.href="/new_database/{{username}}"+"/"+document.getElementById("txt-create-db").value;
+}
+
+</script>
 
 <div id="content">
 	<h2>{{username}}</h2>
 	<hr />
 	<h3 class="gray">Public Databases</h3>
+	<input type="text" id="txt-create-db" /> <button type="button" id="btn-create-db" onclick="create_db();" style="margin-left:10px;">Create a New Database</button>
 	<br />
 	<br />
 	<table id="databases">

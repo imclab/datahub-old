@@ -40,7 +40,7 @@ def login(request):
 				user = User.objects.get(username=username, password=password)
 				request.session.flush()
 				request.session[SESSION_KEY] = user.username
-				return HttpResponseRedirect(user.username)
+				return HttpResponseRedirect("/" + user.username)
 			else:
 				return login_form(request)
 		except:
@@ -60,7 +60,7 @@ def register(request):
 			engine.main.create_table(user.username, 'default_db', 'default_table')
 			request.session.flush()
 			request.session[SESSION_KEY] = user.username
-			return HttpResponseRedirect(user.username)
+			return HttpResponseRedirect("/" + user.username)
 		else:
 			return register_form(request)
 	else:
@@ -85,6 +85,9 @@ def user(request, username=None):
 
 
 
+def new_database(request, username, db_name):
+	engine.main.create_database(username, db_name)
+	return HttpResponseRedirect("/"+username)
 
 def database(request, username, db_name):
 	try:
