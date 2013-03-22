@@ -24,8 +24,8 @@ class User(models.Model):
 
 class Database(models.Model):
 	id = models.AutoField(primary_key=True)
-	name = models.CharField(max_length=20, unique = True)
-	owner = models.BooleanField(default=True)
+	db_name = models.CharField(max_length=20, unique = True)
+	owner = models.ForeignKey('User')
 	timestamp = models.DateTimeField(auto_now=True)
 	def __unicode__(self):
 		return self.name
@@ -36,7 +36,7 @@ class Database(models.Model):
 
 class Table(models.Model):
 	id = models.AutoField(primary_key=True)
-	name = models.CharField(max_length=20, unique = True)
+	table_name = models.CharField(max_length=20, unique = True)
 	database = models.ForeignKey('Database')
 	timestamp = models.DateTimeField(auto_now=True)
 	def __unicode__(self):

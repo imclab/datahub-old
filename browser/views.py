@@ -56,6 +56,8 @@ def register(request):
 		if(username != "" and password != "" and email!=""):
 			user = User(username=username, email=email, password=password)
 			user.save()
+			database = engine.main.create_database(user.username, 'default_db')
+			engine.main.create_table(user.username, database.db_name, 'default_table')
 			request.session.flush()
 			request.session[SESSION_KEY] = user.username
 			return HttpResponseRedirect(user.username)
