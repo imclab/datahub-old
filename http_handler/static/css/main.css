@@ -125,7 +125,6 @@ body {
 
 #page{
 	margin:0 auto;
-	position: absolute;
 	top: 40px;
 	right: 0px;
 	bottom: 0px;
@@ -145,9 +144,9 @@ body {
 	padding-top: 20px;
 	padding-left: 20px;
 	padding-bottom: 20px;
-	margin-bottom: 10px;
 	background-color: #FFF;
 	box-shadow: 1px 0px 10px #666;
+	margin-bottom: 50px;
 }
 
 #content .dataTables_wrapper{
@@ -239,10 +238,11 @@ table.dataTable tbody tr:hover{
 
 #table-input {
 	display: block;
-	height: 500px;
+	height: 200px;
 	margin-left: 0px;
 	margin-top: 10px;
 	width: 100%;
+	resize: vertical;
 }
 
 

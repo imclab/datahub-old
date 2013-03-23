@@ -8,7 +8,7 @@
 $(document).ready(function(){
 	
 
-	function generateTable(table) {
+	function populateTable(table) {
 		var header=table[0]
 		var data = table.slice(1)
 		for(var i=0; i<header.length; i++){
@@ -17,6 +17,7 @@ $(document).ready(function(){
 		}
 		$('#table-output').dataTable({
         	"aaData": data,
+        	"bDestroy": true,
         	"aoColumns": header
     	});
     
@@ -26,20 +27,19 @@ $(document).ready(function(){
 		var input = $('#table-input').val();
 	    var table = $.csv.toArrays(input);
 	    console.log(table)
-	    generateTable(table);
-	    //$('#table-output').empty();
-	    //$('#table-output').html(html);
+	    populateTable(table);
 	}
 
 	$("#btn-parse").click(parse);
+
 });
 </script>
 
 <div id="content">
 	<h2><a href=/{{username}}>{{username}}</a> - <a href=/{{username}}/{{db_name}}>{{db_name}}</a></h2>
 	<hr />
-	<button type="button" id="btn-parse" style="margin-left:10px;">Parse</button>
 	<br />
+	<h3 class="gray">Please copy your data below to parse.</h3>
 	<br />
 	<textarea id="table-input">
 "Prof. Name","Affiliation"
@@ -49,7 +49,10 @@ $(document).ready(function(){
 "Scott Klemmer","Stanford"
 "Terry Winograd","Stanford"
 	</textarea>
+	<br />
+	<button type="button" id="btn-parse" style="margin-left:0px;">Parse</button>
+	<br />
+	<br />
 	<table id="table-output"></table>
-	</div>
 </div>
 {% endblock %}
