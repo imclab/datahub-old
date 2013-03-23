@@ -4,12 +4,52 @@
 {% endblock %}
 {% block content %}
 
+<script type="text/javascript">
+$(document).ready(function(){
+	
+
+	function generateTable(table) {
+		var header=table[0]
+		var data = table.slice(1)
+		for(var i=0; i<header.length; i++){
+			header[i]={'sTitle':header[i]}
+
+		}
+		$('#table-output').dataTable({
+        	"aaData": data,
+        	"aoColumns": header
+    	});
+    
+  	}
+
+	var parse = function(){
+		var input = $('#table-input').val();
+	    var table = $.csv.toArrays(input);
+	    console.log(table)
+	    generateTable(table);
+	    //$('#table-output').empty();
+	    //$('#table-output').html(html);
+	}
+
+	$("#btn-parse").click(parse);
+});
+</script>
+
 <div id="content">
 	<h2><a href=/{{username}}>{{username}}</a> - <a href=/{{username}}/{{db_name}}>{{db_name}}</a></h2>
 	<hr />
-	<input type="text" id="txt-create-db" /> <button type="button" id="btn-create-db" onclick="create_db();" style="margin-left:10px;">Create a New Table</button>
+	<button type="button" id="btn-parse" style="margin-left:10px;">Parse</button>
 	<br />
 	<br />
-	<textarea id="table-input"></textarea>
+	<textarea id="table-input">
+"Prof. Name","Affiliation"
+"David Karger","MIT"
+"Sam Madden","MIT"
+"Jeff Heer","Stanford"
+"Scott Klemmer","Stanford"
+"Terry Winograd","Stanford"
+	</textarea>
+	<table id="table-output"></table>
+	</div>
 </div>
 {% endblock %}
