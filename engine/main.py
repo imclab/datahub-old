@@ -5,7 +5,8 @@ from msg_codes import *
 from django.utils.timezone import utc
 from django.utils.html import escape
 from django.core.management import sql, color
-from django.db import connection
+from db_manager import *
+
 
 '''
 Datahub Main Controller
@@ -23,21 +24,22 @@ def list_databases(username):
 		res['status'] = True
 		res['db_names'] = db_names			
 	except:
+		print sys.exc_info()[0]
 		res['code'] = msg_code['UNKNOWN_ERROR']
 	logging.debug(res)
 	return res
 
 
 
-def list_tables(username, db_name):
+def list_tables(db_name):
 	res = {'status':False}
 	try:
-		db = Database.objects.get(db_name=db_name)
-		tables = Table.objects.filter(database = db)
-		table_names =[table.table_name for table in tables]
-		res['status'] = True
-		res['table_names'] = table_names			
+		con = Connection(db_name = db_name)
+		res = con.list_tables()
+		res['table_names'] = res['data']			
 	except:
+		print "list_tables"
+		print sys.exc_info()[0]
 		res['code'] = msg_code['UNKNOWN_ERROR']
 	logging.debug(res)
 	return res
@@ -48,11 +50,14 @@ def create_database(username, db_name):
 	res = {'status':False}
 	try:
 		user = User.objects.get(username=username)
-		db = Database(owner = user, db_name = user.username + '_' + db_name)
-		#write_database(user.username + '_' + db_name)
+		dbname = user.username + '_' + db_name
+		con = Connection();
+		con.create_database(dbname)
+		db = Database(owner = user, db_name = dbname)		
 		db.save()
 		res['status'] = True				
 	except:
+		print "create_database"
 		print sys.exc_info()[0]
 		res['code'] = msg_code['UNKNOWN_ERROR']
 	logging.debug(res)
@@ -60,26 +65,19 @@ def create_database(username, db_name):
 
 
 
-def create_table(username, db_name, table_name):
+def create_table(db_name, table_name):
 	res = {'status':False}
 	try:
-		db = Database.objects.get(db_name=username + '_' + db_name)
-		table = Table(database = db, table_name = db.db_name + '_' + table_name)
-		table.save()
-		res['table'] = table
+		db = Database.objects.get(db_name = db_name)
+		con = Connection(db_name = db_name);
+		con.create_table(table_name)
 		res['status'] = True				
 	except:
+		print "create_table"
 		print sys.exc_info()[0]
 		res['code'] = msg_code['UNKNOWN_ERROR']
 	logging.debug(res)
 	return res
 
 
-def write_database(db_name):
-	cursor = connection.cursor()
-	cursor.execute('CREATE DATABASE %s' %(db_name))
-
-def write_table(table_name):
-	cursor = connection.cursor()
-	cursor.execute('CREATE TABLE %s (id int primary key)' %(table_name))
 	

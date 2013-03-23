@@ -56,9 +56,6 @@ def register(request):
 		if(username != "" and password != "" and email!=""):
 			user = User(username=username, email=email, password=password)
 			user.save()
-			engine.main.create_database(user.username, 'default_db')
-			res = engine.main.create_table(user.username, 'default_db', 'default_table')
-			engine.main.write_table(res['table'].table_name)
 			request.session.flush()
 			request.session[SESSION_KEY] = user.username
 			return HttpResponseRedirect("/" + user.username)
@@ -104,7 +101,7 @@ def new_table(request, username, db_name):
 
 def database(request, username, db_name):
 	try:
-		res = engine.main.list_tables(username, db_name)
+		res = engine.main.list_tables(db_name)
 		return render_to_response("database.html", {'username': username, 'db_name':db_name, 'table_names':res['table_names']})
 	except Exception, e:
 		logging.debug(e)

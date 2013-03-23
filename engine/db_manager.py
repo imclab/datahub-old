@@ -1,11 +1,11 @@
 import psycopg2
 import re
 
-class DbManager(object):
+class DbManager:
         def __init__(self):
                 self.connections = {}
 
-        def open_connection(self, con_name, user, password, host='localhost', port=5432, database=''):
+        def open_connection(self, con_name, user="postgres", password="postgres", host='localhost', port=5432, db_name=''):
                 con = Connection(user, password, host, port, database)
                 self.connections[con_name] = con
                 return con
@@ -18,9 +18,9 @@ class DbManager(object):
 
 
 
-class Connection(object):
-        def __init__(self, user, password, host='localhost', port=5432, database=''):
-                self.connection = psycopg2.connect(user=user, password=password, host=host, port=port, database=database)
+class Connection:
+        def __init__(self, user="postgres", password="postgres", host='localhost', port=5432, db_name=''):
+                self.connection = psycopg2.connect(user=user, password=password, host=host, port=port, database=db_name)
 
         def __del__(self):
                 self.connection.close()
@@ -46,7 +46,7 @@ class Connection(object):
 
 
 
-        def create_databases(self, db_name):
+        def create_database(self, db_name):
                 res={'status':False}
                 self.connection.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
                 c = self.connection.cursor()
@@ -55,15 +55,20 @@ class Connection(object):
                 res={'status':True}
                 return res
 
-        def create_table(self, table_name):               
-                s = "CREATE TABLE %s" %(table_name)
+        def create_table(self, table_name):
+                res={'status':False}
+                c = self.connection.cursor()             
+                s = "CREATE TABLE %s (id int)" %(table_name)
+                c.execute(s, None)
+                res={'status':True}
+                return res
 
         
 
 
 if __name__ == '__main__':
-        dbm = DbManager()
-        con = dbm.open_connection(con_name='datahub', user='postgres', password='postgres', host='localhost', port=5432, database='datahub')
-        print  con.create_databases('test1');
+        #con = Connection()
+        #print  con.create_database('test2');
+        con = Connection(db_name='abhardwaj_db1')
         print  con.list_databases()
         print con.list_tables()
