@@ -49,9 +49,11 @@ def create_database(username, db_name):
 	try:
 		user = User.objects.get(username=username)
 		db = Database(owner = user, db_name = user.username + '_' + db_name)
+		#write_database(user.username + '_' + db_name)
 		db.save()
 		res['status'] = True				
 	except:
+		print sys.exc_info()[0]
 		res['code'] = msg_code['UNKNOWN_ERROR']
 	logging.debug(res)
 	return res
@@ -67,10 +69,15 @@ def create_table(username, db_name, table_name):
 		res['table'] = table
 		res['status'] = True				
 	except:
+		print sys.exc_info()[0]
 		res['code'] = msg_code['UNKNOWN_ERROR']
 	logging.debug(res)
 	return res
 
+
+def write_database(db_name):
+	cursor = connection.cursor()
+	cursor.execute('CREATE DATABASE %s' %(db_name))
 
 def write_table(table_name):
 	cursor = connection.cursor()

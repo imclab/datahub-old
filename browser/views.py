@@ -97,6 +97,10 @@ def new_database(request, username, db_name):
 	return HttpResponseRedirect("/"+username)
 
 
+def new_table(request, username, db_name):
+	return render_to_response("new_table.html", {'username': username, 'db_name':db_name})
+
+
 
 def database(request, username, db_name):
 	try:
