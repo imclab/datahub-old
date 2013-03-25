@@ -69,6 +69,6 @@ class Connection:
 if __name__ == '__main__':
         #con = Connection()
         #print  con.create_database('test2');
-        con = Connection(db_name='abhardwaj_db1')
+        con = Connection()
         print  con.list_databases()
         print con.list_tables()
