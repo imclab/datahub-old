@@ -12,12 +12,12 @@ function create_table(){
 
 </script>
 <div id="content">
-	<h2><a href=/{{username}}>{{username}}</a> - {{db_name}}</h2>
+	<h2><a class="link" href=/{{username}}>{{username}}</a> / <a class = "link" href=/{{username}}/{{db_name}}>{{db_name}}</a></h2>
 	<hr />
-	<button type="button" id="btn-create-db" onclick="create_table();" style="margin-left:0px;">Create a New Table</button>
+	<button type="button" id="btn-create-db" onclick="create_table();">Create a New Table</button>
 	<br />
 	<br />
-	<h3><span class="gray">Displaying Tables in:</span> <span class="strong">{{db_name}}</span></h3>
+	<h3><span class="gray">Public Tables</span></h3>
 	<br />
 	<table id="databases">
 		<thead>

@@ -6,15 +6,15 @@
 <script type="text/javascript">
 
 function create_db(){
-	window.location.href="/new_database/{{username}}"+"/"+document.getElementById("txt-create-db").value;
+	window.location.href="/new_database/{{username}};
 }
 
 </script>
 
 <div id="content">
-	<h2>{{username}}</h2>
+	<h2><a class="link" href=/{{username}}>{{username}}</a></h2>
 	<hr />
-	<input type="text" id="txt-create-db" /> <button type="button" id="btn-create-db" onclick="create_db();" style="margin-left:10px;">Create a New Database</button>
+	<button type="button" id="btn-create-db" onclick="create_db();">Create a New Database</button>
 	<br />
 	<br />
 	<h3><span class="gray">Public Databases</span></h3>
