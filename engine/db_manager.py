@@ -19,7 +19,7 @@ class DbManager:
 
 
 class Connection:
-        def __init__(self, user="postgres", password="postgres", host='localhost', port=5432, db_name=''):
+        def __init__(self, user="postgres", password="postgres", host='localhost', port=5432, db_name='postgres'):
                 self.connection = psycopg2.connect(user=user, password=password, host=host, port=port, database=db_name)
 
         def __del__(self):
