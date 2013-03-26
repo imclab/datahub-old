@@ -7,7 +7,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
-
+	$("#form-create-table").hide();
 	function populateTable(table) {
 		var header=table[0]
 		var data = table.slice(1)
@@ -18,17 +18,37 @@ $(document).ready(function(){
 		$('#table-output').dataTable({
         	"aaData": data,
         	"bDestroy": true,
-        	"aoColumns": header
+        	"aoColumns": header,
+        	"sWidth": "100%",
+        	"bPaginate": false,
+			"bFilter": true,
+			"bInfo": false
     	});
     
   	}
 
+  	function bind (data){
+  		return function(){
+  			create_table(data);
+  		}
+  	}
+
+
 	var parse = function(){
 		var input = $('#table-input').val();
 	    var table = $.csv.toArrays(input);
-	    console.log(table)
 	    populateTable(table);
+	    f = bind(table)
+	    $("#form-create-table").show();
+	    $("#btn-create-table").click(f);
 	}
+
+
+	function create_table(table){
+			console.log(table);
+	}
+
+	
 
 	$("#btn-parse").click(parse);
 
@@ -42,17 +62,47 @@ $(document).ready(function(){
 	<h3 class="gray">Please copy your data below to parse.</h3>
 	<br />
 	<textarea id="table-input">
-"Prof. Name","Affiliation"
+"Name","Affiliation"
 "David Karger","MIT"
 "Sam Madden","MIT"
 "Jeff Heer","Stanford"
 "Scott Klemmer","Stanford"
 "Terry Winograd","Stanford"
+"Anant Bhardwaj","MIT"
 	</textarea>
 	<br />
 	<button type="button" id="btn-parse" style="margin-left:0px;">Parse</button>
 	<br />
 	<br />
 	<table id="table-output"></table>
+	<br />
+	<br />
+	<div id="form-create-table" class="form">
+		<h3>Please fill in the following details to create the table:</h3>
+		<hr />
+		<table>
+		<tr>
+			<td>
+				<span class="gray strong">Database: </span>
+			</td>
+			<td style="padding-left:20px;">
+				<span class="strong">{{db_name}}</span>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span class="gray strong">Name of the new table: </span>
+			</td>
+			<td style="padding-left:20px;">
+				<input type="text" id="table-name" />
+			</td>
+		</tr>
+	</table>
+	 <br />
+	 <br />
+	<button type="button" id="btn-create-table" style="margin-left:0px;">Create Table</button>
+	</div>
+
+
 </div>
 {% endblock %}
