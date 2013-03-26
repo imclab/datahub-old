@@ -8,28 +8,10 @@ $(document).ready(function(){
  
 	/* Dynamic Table Definitions */	
 	
-	databases = $('#databases').dataTable({
-		"sDom": '<"top"f<"clear">>rt<"bottom"ilp<"clear">>',
-		"bPaginate": false,
-		"bFilter": true,
-		"sWidth": "100%",
-		"aoColumns": [                 
-			{"sWidth": "50%"},
-			{"sWidth": "50%"},
-		],
-		"fnInitComplete": function() {
-                    $('#databases tbody tr').on("click", function () {
-                        load_table(this);
-                    } ); }
-	});
 	
 	
 
-	function load_table (tr) {
-		var url = window.location.href + '/' + $(tr.cells[0]).html();
-		console.log(url)
-		$(location).attr('href',url);
-	}
+	
 	
 	/* Default blur effect in textbox */
 	

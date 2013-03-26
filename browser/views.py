@@ -109,6 +109,11 @@ def new_database(request, username, db_name):
 	return HttpResponseRedirect("/"+username)
 
 
+def new_table(request):
+	engine.main.create_table(username, db_name)
+	return HttpResponseRedirect("/%s/%s" %(username, db_name))
+
+
 def database(request, username, db_name):
 	try:
 		res = engine.main.list_tables(db_name)
